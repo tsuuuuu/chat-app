@@ -40,7 +40,7 @@ input {
 button {
     cursor: pointer;
     padding: 12px;
-    background: #7C5CBF;
+    background: #1D1F26;
     border: none;
     color: white;
     font-size: 16px;
@@ -48,12 +48,12 @@ button {
 }
 
 button:hover {
-    background: #6b47b8;
+    background: #333744;
 }
 
 button:disabled {
     cursor: default;
-    background: #7c5cbf94;
+    background: #a5a5a5a5;
 }
 
 /* Join Page Styles */
@@ -71,7 +71,7 @@ button:disabled {
     box-shadow: 0px 0px 17px 1px #1D1F26;
     background: #F7F7FA;
     padding: 24px;
-    width: 250px;
+    width: 300px;
 }
 
 .centered-form button {
@@ -81,6 +81,34 @@ button:disabled {
 .centered-form input {
     margin-bottom: 16px;
     width: 100%;
+}
+
+.centered-form select {
+    margin-bottom: 16px;
+    width: 100%;
+    border: 1px solid #eeeeee;
+    padding: 10px;
+    font-size: 14px;
+    color: #777;
+    outline: none;
+}
+
+/* Header */
+
+.header {
+    padding: 10px;
+    text-align: left;
+    background: #1D1F26;
+    max-height: 12vh;
+    display: none;
+}
+
+.logo {
+    max-width: 350px;
+    max-height: 110px;
+    height: auto;
+    width: auto;
+    margin-left: 200px;
 }
 
 /* Chat Page Layout */
@@ -94,7 +122,8 @@ button:disabled {
     color: white;
     background: #333744;
     width: 225px;
-    overflow-y: scroll
+    overflow-y: scroll;
+    flex-shrink: 0;
 }
 
 /* Chat styles */
@@ -110,6 +139,7 @@ button:disabled {
     flex-grow: 1;
     padding: 24px 24px 0 24px;
     overflow-y: scroll;
+    word-break: break-all;
 }
 
 /* Message Styles */
@@ -138,7 +168,7 @@ button:disabled {
 .compose {
     display: flex;
     flex-shrink: 0;
-    margin-top: 16px;
+    /* margin-top: 16px; */
     padding: 24px;
 }
 
@@ -158,6 +188,17 @@ button:disabled {
 
 .compose button {
     font-size: 14px;
+    height: 40px;
+}
+
+.float {
+    float: left;
+    width: auto;
+    padding: 10px 25px 0 16px;
+    align-content: center;
+}
+.float input {
+    width: 20px;
 }
 
 /* Chat Sidebar Styles */
@@ -165,8 +206,10 @@ button:disabled {
 .room-title {
     font-weight: 400;
     font-size: 22px;
+    font-weight: bold;
+    text-align: center;
     background: #2c2f3a;
-    padding: 24px;   
+    padding: 24px ;   
 }
 
 .list-title {
@@ -180,4 +223,22 @@ button:disabled {
     list-style-type: none;
     font-weight: 300;
     padding: 12px 24px 0 24px;
+}
+
+
+@media (min-height: 500px) { 
+    .header {
+        display: flex;
+        max-height: 12vh;
+    }
+    .chat__main {
+        max-height: 87vh;
+    }
+    .chat__sidebar {
+        max-height: 87vh;
+    }
+    .compose {
+        margin-top: 0px;
+        padding: 0px 24px 12px 24px;
+    }
 }

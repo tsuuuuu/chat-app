@@ -36,8 +36,9 @@ io.on('connection', (socket) => {
 
         socket.join(user.room)
 
-        socket.emit('message', generateMessage('Admin','Welcome!'))
-        socket.broadcast.to(user.room).emit('message', generateMessage('Admin',`${user.username} has joined!`))
+        const sala = user.room.charAt(0).toUpperCase() + user.room.slice(1)
+        socket.emit('message', generateMessage('Admin',`Bem vindo(a) à sala ${sala}!`))
+        socket.broadcast.to(user.room).emit('message', generateMessage('Admin',`${user.username} entrou na sala!`))
         io.to(user.room).emit('roomData', {
             room: user.room,
             users: getUsersInRoom(user.room)
@@ -48,14 +49,16 @@ io.on('connection', (socket) => {
 
     socket.on('sendMessage', (message, callback) => {
         const filter = new Filter()
+        filter.addWords('bosta', 'merda', 'porra', 'caralho', 'pau', 'cu', 'buceta')
         const user = getUser(socket.id)
 
         if (filter.isProfane(message)) {
-            return callback('Profanity is not allowed!')
+            socket.emit('message', generateMessage('Apenas linguagem apropriada!'))
+            callback()
+        } else {
+            io.to(user.room).emit('message', generateMessage(user.username, message))
+            callback()
         }
-        
-        io.to(user.room).emit('message', generateMessage(user.username, message))
-        callback()
     })
 
     socket.on('sendLocation', (position, callback) => {
@@ -68,12 +71,22 @@ io.on('connection', (socket) => {
         const user = removeUser(socket.id)
 
         if (user) {
-            io.to(user.room).emit('message', generateMessage('Admin',`${user.username} has left!`))
+            io.to(user.room).emit('message', generateMessage('Admin',`${user.username} saiu da sala!`))
             io.to(user.room).emit('roomData', {
                 room: user.room,
                 users: getUsersInRoom(user.room)
             })
         } 
+    })
+
+    socket.on('index', () => {
+        console.log('index access!')
+        socket.emit('rooms', [
+            getUsersInRoom('geral').length, 
+            getUsersInRoom('tecnologia').length, 
+            getUsersInRoom('games').length, 
+            getUsersInRoom('desenvolvimento').length
+        ])
     })
 })
 
